@@ -1,0 +1,9 @@
+This project uses the MIT-licensed Gemini Watermark Remover project by GargantuaX.
+
+Upstream project:
+https://github.com/GargantuaX/gemini-watermark-remover
+
+The video pipeline assets are taken from the published @pilio/gemini-watermark-remover package.
+The package's bundled dist/ directory is copied into public/official-video/ during npm install.
+
+This site also uses Vite.
