@@ -151,10 +151,10 @@ mediaPick?.addEventListener('keydown', (event) => {
 });
 mediaPick && (mediaPick.tabIndex = 0);
 
-function setMode(nextMode) {
+function setMode(nextMode, warm = true) {
   if (busy) return;
   mode = nextMode;
-  if (mode === 'video') ensureOfficialVideoPipeline().catch(() => {});
+  if (mode === 'video' && warm) ensureOfficialVideoPipeline().catch(() => {});
   imageTab.classList.toggle('active', mode === 'image');
   videoTab.classList.toggle('active', mode === 'video');
   uploadPanel.classList.toggle('hidden', !!selectedFile);
@@ -570,4 +570,13 @@ function canvasToBlob(canvas, type = 'image/png') {
   return new Promise((resolve, reject) => {
     canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('Could not encode the result image.'))), type);
   });
+}
+
+// SEO landing pages: set heading and default mode from <body data-*>
+const pageMode = document.body.dataset.mode;
+if (pageMode) {
+  const pageH1 = document.body.dataset.h1;
+  if (pageH1) document.querySelector('.hero h1').textContent = pageH1;
+  document.querySelector('.seo')?.remove();
+  if (pageMode === 'video') setMode('video', false);
 }
